@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 import environ
 
 env = environ.Env(DEBUG=(bool, False))
@@ -52,6 +53,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'users',
+     'djoser',
+    'rest_framework_simplejwt'
 ]
 
 MIDDLEWARE = [
@@ -141,3 +144,47 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+       
+    ),
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': (
+        'Bearer',
+        'JWT'
+    ),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
+    'SIGNING_KEY':env('SIGNING_KEY'),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+}
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'USERNAME_RESET_CONFIRM_URL': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION':True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION':True,
+    'SEND_CONFIRMATION_EMAIL':True,
+    'PASSWORD_RESET_CONFIRM_RETYPE':'password/reset/confirm/{uid}/{token}',
+    'SET_USERNAME_RETYPE':True,
+    'PASSWORD_RESET_CONFIRM_RETYPE':True,
+    'USERNAME_RESET_CONFIRM_RETYPE': 'username/reset/confirm/{uid}/{token}',
+    
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+
+    'SERIALIZERS': {
+             'user_create': 'users.serializers.UserCreateSerializer',
+             'user_delete': 'djoser.serializers.UserDeleteSerializer',
+             'user': 'users.serializers.CreateUserSerializer',
+    }
+
+
+
+
+}
