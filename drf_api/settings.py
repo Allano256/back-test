@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
      'djoser',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'cities'
 ]
 
 MIDDLEWARE = [
