@@ -1,0 +1,30 @@
+# Compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.sqlite3  # If you're using SQLite for local development
+db.sqlite3
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+.env.*
+
+/static/
+/static_root/
+
+# Static and media files
+/staticfiles/
+/media/
+
+# IDE specific files
+.vscode/
+
+# Node.js dependencies
+node_modules/
