@@ -7,6 +7,11 @@ from rest_framework.views import APIView
 from rest_framework import permissions
 from .serializers import SignUpSerializer, LoginSerializer
 from .tokens import create_jwt_pair_for_user
+from django.contrib.auth.hashers import make_password, check_password
+from .models import User
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 
@@ -18,10 +23,20 @@ class SignUpView(generics.GenericAPIView):
     def post(self, request: Request):
         data = request.data
 
-        serializer = self.serializer_class(data=data)
+        serializer = SignUpSerializer(data=data)
 
         if serializer.is_valid():
-            serializer.save()
+            password_hash = make_password(serializer.validated_data.get("password"))
+            
+            user = User.objects.create(
+                email=serializer.validated_data.get("email"),
+                first_name=serializer.validated_data.get("first_name"),
+                last_name=serializer.validated_data.get("last_name"),
+                password=password_hash,
+                is_active=True
+            )
+
+            user.save()
 
             response = {"message": "User Created Successfully", "data": serializer.data}
 
@@ -37,23 +52,16 @@ class LoginView(generics.GenericAPIView):
     def post(self, request: Request):
         email = request.data.get("email")
         password = request.data.get("password")
+     
+        user = User.objects.get(email=email)
 
-        serializer = LoginSerializer(data=request.data)
+        if user and check_password(password, user.password):
 
-        if serializer.is_valid():
-            user = authenticate(email=email, password=password)
+            tokens = create_jwt_pair_for_user(user)
 
-            if user is not None:
-
-                tokens = create_jwt_pair_for_user(user)
-
-                response = {"message": "Login Successfull", "tokens": tokens}
-                return Response(data=response, status=status.HTTP_200_OK)
+            response = {"message": "Login Successfull", "tokens": tokens}
+            return Response(data=response, status=status.HTTP_200_OK)
 
         else:
-            return Response(data={"message": "Invalid email or password"})
-
-    def get(self, request: Request):
-        content = {"user": str(request.user), "auth": str(request.auth)}
-
-        return Response(data=content, status=status.HTTP_200_OK)
+            logger.info("User {}".format(user))
+            return Response(data={"message": "Invalid email or password"}, status=400)
