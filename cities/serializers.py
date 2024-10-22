@@ -32,3 +32,6 @@ class NewCitySerializer(serializers.ModelSerializer):
         ]
 
 
+
+
+
