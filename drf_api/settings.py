@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-allano256-backtest-2arkx3886yl.ws.codeinstitute-ide.net']
+ALLOWED_HOSTS = ['8000-allano256-backtest-2arkx3886yl.ws.codeinstitute-ide.net', 'drf-api-remember-f742a049740b.herokuapp.com']
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Frontend (React, for example)
