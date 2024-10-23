@@ -39,8 +39,22 @@ ALLOWED_HOSTS = ['8000-allano256-backtest-2arkx3886yl.ws.codeinstitute-ide.net',
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Frontend (React, for example)
-    "http://127.0.0.1:8000",  # Backend
+    'https://drf-api-remember-f742a049740b.herokuapp.com',  # Backend
+
+
 ]
+
+
+if 'CLIENT_ORIGIN' in os.environ:
+     CORS_ALLOWED_ORIGINS = [
+         os.environ.get('CLIENT_ORIGIN')
+     ]
+else:
+     CORS_ALLOWED_ORIGIN_REGEXES = [
+         r"^https://.*\.gitpod\.io$",
+     ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
