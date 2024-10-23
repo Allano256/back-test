@@ -16,6 +16,9 @@ import environ
 import os
 import dj_database_url
 
+if os.path.isfile('env.py'):
+    import env
+
 env = environ.Env(DEBUG=(bool, False))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,12 +30,12 @@ environ.Env.read_env(BASE_DIR / ".env")
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['8000-allano256-backtest-2arkx3886yl.ws.codeinstitute-ide.net']
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Frontend (React, for example)
@@ -93,25 +96,20 @@ WSGI_APPLICATION = "drf_api.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-# if 'DEV' in os.environ:
-#      DATABASES = {
-#          'default': {
-#              'ENGINE': 'django.db.backends.sqlite3',
-#              'NAME': BASE_DIR / 'db.sqlite3',
-#          }
-#      }
-# else:
-#      DATABASES = {
-#          'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-#      }
 
-#      print('connected')
+if 'DEV' in os.environ:
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.sqlite3',
+             'NAME': BASE_DIR / 'db.sqlite3',
+         }
+     }
+else:
+     DATABASES = {
+         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+     }
+
+     print('connected')
 
 
 # Password validation
@@ -181,12 +179,14 @@ SWAGGER_SETTINGS = {
     }
 }
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = env("EMAIL_HOST")
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = "info@drf-api.com"
-EMAIL_PORT = env("EMAIL_PORT")
-EMAIL_USE_TLS = True
-SITE_NAME = "drf api"
-DOMAIN = env("DOMAIN")
+
+
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = env("EMAIL_HOST")
+# EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+# DEFAULT_FROM_EMAIL = "info@drf-api.com"
+# EMAIL_PORT = env("EMAIL_PORT")
+# EMAIL_USE_TLS = True
+# SITE_NAME = "drf api"
+# DOMAIN = env("DOMAIN")

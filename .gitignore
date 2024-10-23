@@ -16,6 +16,8 @@ db.sqlite3
 .env
 .env.*
 
+env.py
+
 /static/
 /static_root/
 
