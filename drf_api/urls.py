@@ -21,7 +21,7 @@ from django.urls import re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from .views import root_route
+
 
 
 schema_view = get_schema_view(
@@ -41,7 +41,7 @@ version = "v1"
 api_prefix = f"api/{version}"
 
 urlpatterns = [
-    path('',root_route),
+   
     path("admin/", admin.site.urls),
     path(
         "swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"
