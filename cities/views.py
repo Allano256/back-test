@@ -38,11 +38,9 @@ class NewCityView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    def get(self, request):
-        query= NewCity.objects.filter(user=request.user).all()
-        serializer=self.serializer_class(instance=query)
-        return Response(data=serializer.data, status_code=status.HTTP_200_OK)
-
+    def get_queryset(self):
+        # Return only items owned by the current user
+        return NewCity.objects.filter(user=self.request.user)
 
 
 class NewCityDetailView(generics.RetrieveUpdateDestroyAPIView):
