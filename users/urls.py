@@ -1,3 +1,5 @@
+#This code is a combination of two contributors, me and Jonathan(jod35) 
+
 from django.urls import path, include
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,

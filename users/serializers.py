@@ -7,6 +7,7 @@ from .models import User
 
 User = get_user_model()
 
+#This code is a combination of two contributors, me and Jonathan(jod35) 
 
 class SignUpSerializer(serializers.ModelSerializer):
     email = serializers.CharField(max_length=80)

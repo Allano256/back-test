@@ -23,7 +23,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from .views import root_route
 
-
+#This code is a combination of two contributors, me and Jonathan(jod35) 
 
 schema_view = get_schema_view(
     openapi.Info(
