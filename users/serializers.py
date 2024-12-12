@@ -10,6 +10,9 @@ User = get_user_model()
 #This code is a combination of two contributors, me and Jonathan(jod35) 
 
 class SignUpSerializer(serializers.ModelSerializer):
+    """
+    This will serialize the data provided by the user.
+    """
     email = serializers.CharField(max_length=80)
    
     password = serializers.CharField(min_length=8, write_only=True)

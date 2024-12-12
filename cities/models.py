@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 
 
 class NewCity(models.Model):
+    """
+    This is the model that constitutes the data fields expected to be recieved from the frontend of the application.
+    """
     user=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     city_name=models.CharField(max_length=150)
     date=models.DateField(auto_now_add=True)

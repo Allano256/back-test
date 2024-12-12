@@ -13,6 +13,9 @@ from rest_framework.authentication import TokenAuthentication
 
 
 class NewCityView(generics.ListCreateAPIView):
+    """
+    This view handles creation of a new City.
+    """
     queryset=NewCity.objects.all()
     serializer_class=NewCitySerializer
     permissions_class=[IsAuthenticated]
@@ -26,6 +29,9 @@ class NewCityView(generics.ListCreateAPIView):
 
 
 class NewCityDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    This view handles the update,retrieval and deletion of the city.
+    """
     queryset=NewCity.objects.all()
     serializer_class= NewCitySerializer
     permission_classes=[IsAuthenticated]

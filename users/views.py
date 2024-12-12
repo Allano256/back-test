@@ -13,10 +13,14 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# Create your views here.
+
 
 
 class SignUpView(generics.GenericAPIView):
+    """
+    This view handles the signup of user.
+    """
+
     serializer_class = SignUpSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -46,6 +50,9 @@ class SignUpView(generics.GenericAPIView):
 
 
 class LoginView(generics.GenericAPIView):
+    """
+    This view handles the login of user.
+    """
     permission_classes = [permissions.AllowAny]
     serializer_class = LoginSerializer
 
