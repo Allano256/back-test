@@ -14,17 +14,30 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        
         migrations.CreateModel(
-            name='NewCity',
+            name="NewCity",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('city_name', models.CharField(max_length=150)),
-                ('date', models.DateField(auto_now_add=True)),
-                ('notes', models.TextField()),
-                ('lng', models.FloatField(default=0.0)),
-                ('lat', models.FloatField(default=0.0)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("city_name", models.CharField(max_length=150)),
+                ("date", models.DateField(auto_now_add=True)),
+                ("notes", models.TextField()),
+                ("lng", models.FloatField(default=0.0)),
+                ("lat", models.FloatField(default=0.0)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

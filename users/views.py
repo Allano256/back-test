@@ -14,8 +14,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-
-
 class SignUpView(generics.GenericAPIView):
     """
     This view handles the signup of user.
@@ -30,36 +28,42 @@ class SignUpView(generics.GenericAPIView):
         serializer = SignUpSerializer(data=data)
 
         if serializer.is_valid():
-            password_hash = make_password(serializer.validated_data.get("password"))
-            
+            password_hash = make_password(
+                serializer.validated_data.get("password")
+                )
+
             user = User.objects.create(
                 email=serializer.validated_data.get("email"),
                 first_name=serializer.validated_data.get("first_name"),
                 last_name=serializer.validated_data.get("last_name"),
                 password=password_hash,
-                is_active=True
+                is_active=True,
             )
 
             user.save()
 
-            response = {"message": "User Created Successfully", "data": serializer.data}
+            response = {
+                "message": "User Created Successfully", "data": serializer.data
+                }
 
             return Response(data=response, status=status.HTTP_201_CREATED)
 
-        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginView(generics.GenericAPIView):
     """
     This view handles the login of user.
     """
+
     permission_classes = [permissions.AllowAny]
     serializer_class = LoginSerializer
 
     def post(self, request: Request):
         email = request.data.get("email")
         password = request.data.get("password")
-     
+
         user = User.objects.get(email=email)
 
         if user and check_password(password, user.password):
@@ -71,4 +75,5 @@ class LoginView(generics.GenericAPIView):
 
         else:
             logger.info("User {}".format(user))
-            return Response(data={"message": "Invalid email or password"}, status=400)
+            return Response(data={
+                "message": "Invalid email or password"}, status=400)

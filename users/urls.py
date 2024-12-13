@@ -1,11 +1,11 @@
-#This code is a combination of two contributors, me and Jonathan(jod35) 
+# This code is a combination of two contributors, me and Jonathan(jod35)
 
 from django.urls import path, include
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView,
-    TokenBlacklistView
+    TokenBlacklistView,
 )
 
 from . import views
@@ -16,6 +16,6 @@ urlpatterns = [
     path("jwt/create/", TokenObtainPairView.as_view(), name="jwt_create"),
     path("jwt/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("jwt/verify/", TokenVerifyView.as_view(), name="token_verify"),
-    path('logout/', TokenBlacklistView.as_view(), name='token_revoke'),
-    path('', include('cities.urls')),
+    path("logout/", TokenBlacklistView.as_view(), name="token_revoke"),
+    path("", include("cities.urls")),
 ]

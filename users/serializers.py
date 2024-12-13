@@ -7,19 +7,21 @@ from .models import User
 
 User = get_user_model()
 
-#This code is a combination of two contributors, me and Jonathan(jod35) 
+# This code is a combination of two contributors, me and Jonathan(jod35)
+
 
 class SignUpSerializer(serializers.ModelSerializer):
     """
     This will serialize the data provided by the user.
     """
+
     email = serializers.CharField(max_length=80)
-   
+
     password = serializers.CharField(min_length=8, write_only=True)
 
     class Meta:
         model = User
-        fields = ["email", "first_name","last_name", "password"]
+        fields = ["email", "first_name", "last_name", "password"]
 
     def validate(self, attrs):
 
@@ -30,10 +32,11 @@ class SignUpSerializer(serializers.ModelSerializer):
 
         return super().validate(attrs)
 
+
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    password = serializers.CharField( write_only=True)
-    
+    password = serializers.CharField(write_only=True)
+
 
 class CurrentUserPostsSerializer(serializers.ModelSerializer):
     posts = serializers.HyperlinkedRelatedField(

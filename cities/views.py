@@ -1,24 +1,22 @@
 from django.shortcuts import render
-
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
-from .models import  NewCity
-from .serializers import  NewCitySerializer
+from .models import NewCity
+from .serializers import NewCitySerializer
 from rest_framework.permissions import IsAuthenticated
-
 from rest_framework.authentication import TokenAuthentication
-
 
 
 class NewCityView(generics.ListCreateAPIView):
     """
     This view handles creation of a new City.
     """
-    queryset=NewCity.objects.all()
-    serializer_class=NewCitySerializer
-    permissions_class=[IsAuthenticated]
+
+    queryset = NewCity.objects.all()
+    serializer_class = NewCitySerializer
+    permissions_class = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -32,8 +30,7 @@ class NewCityDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     This view handles the update,retrieval and deletion of the city.
     """
-    queryset=NewCity.objects.all()
-    serializer_class= NewCitySerializer
-    permission_classes=[IsAuthenticated]
 
-
+    queryset = NewCity.objects.all()
+    serializer_class = NewCitySerializer
+    permission_classes = [IsAuthenticated]

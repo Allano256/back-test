@@ -4,8 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
 
 
-
-#This code is a combination of two contributors, me and Jonathan(jod35) 
+# This code is a combination of two contributors, me and Jonathan(jod35)
 class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_("First Name"), max_length=100)
     last_name = models.CharField(_("Last Name"), max_length=100)
