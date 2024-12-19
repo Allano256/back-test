@@ -70,7 +70,7 @@ class LoginView(generics.GenericAPIView):
 
             tokens = create_jwt_pair_for_user(user)
 
-            response = {"message": "Login Successfull", "tokens": tokens}
+            response = {"message": "Login Successfull", "tokens": tokens, "user":user}
             return Response(data=response, status=status.HTTP_200_OK)
 
         else:
