@@ -13,4 +13,4 @@ class NewCitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NewCity
-        fields = ["id", "user", "city_name", "date", "notes", "lat", "lng"]
+        fields = ["id", "user", "city_name", "date", 'updated', "notes", "lat", "lng"]
