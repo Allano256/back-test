@@ -11,7 +11,7 @@ class NewCity(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     city_name = models.CharField(max_length=150)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     notes = models.TextField(max_length=200)
     lng = models.FloatField(default=0.0)
     lat = models.FloatField(default=0.0)
