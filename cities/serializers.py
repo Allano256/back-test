@@ -15,4 +15,4 @@ class NewCitySerializer(serializers.ModelSerializer):
         model = NewCity
         fields = ["id", "user", "city_name", "date", "notes", "lat", "lng"]
 
-        date = serializers.DateField(format="%Y-%m-%d")
+       
