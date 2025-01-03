@@ -23,16 +23,31 @@ class SignUpSerializer(serializers.ModelSerializer):
         model = User
         fields = ["email", "first_name", "last_name", "password"]
 
-    def validate(self, attrs):
+        extra_kwargs = {
+            'password': {'write_only': True},  
+            'email': {'required': True},  
+          }
+        
 
-        email_exists = User.objects.filter(email=attrs["email"]).exists()
+    def validate_email(self, value):
 
-        if email_exists:
-            raise ValidationError("Email has already been used")
+        if not value:
+            raise serializers.ValidationError("Email is required.")
+        if '@' not in value:
+            raise serializers.ValidationError("Enter a valid email address.")
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("Email has already been used")
+        return value
+       
+        
+       
 
-        return super().validate(attrs)
+    def validate_password(self, value):
+        if len(value) < 8:
+            raise serializers.ValidationError("Password must be at least 8 characters long.")
+        return value
 
-
+       
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)

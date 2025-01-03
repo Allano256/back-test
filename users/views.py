@@ -64,7 +64,15 @@ class LoginView(generics.GenericAPIView):
         email = request.data.get("email")
         password = request.data.get("password")
 
-        user = User.objects.get(email=email)
+        try:
+
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            logger.info("Invalid login attempt for email: {}".format(email))
+            return Response(
+                data={"message":"Invalid email or password"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         if user and check_password(password, user.password):
 
@@ -74,7 +82,8 @@ class LoginView(generics.GenericAPIView):
            
             return Response(data=response, status=status.HTTP_200_OK)
 
-        else:
-            logger.info("User {}".format(user))
-            return Response(data={
-                "message": "Invalid email or password"}, status=400)
+        return Response(
+            data={"message":"Invalid email or password"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+            
