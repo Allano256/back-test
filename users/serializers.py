@@ -53,11 +53,9 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
 
-class CurrentUserPostsSerializer(serializers.ModelSerializer):
-    posts = serializers.HyperlinkedRelatedField(
-        many=True, view_name="post_detail", queryset=User.objects.all()
-    )
 
+
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ["id", "username", "email", "posts"]
+        model=User
+        fields='__all__'

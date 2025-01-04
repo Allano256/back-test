@@ -5,7 +5,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import permissions
-from .serializers import SignUpSerializer, LoginSerializer
+from .serializers import SignUpSerializer, LoginSerializer, UserSerializer
 from .tokens import create_jwt_pair_for_user
 from django.contrib.auth.hashers import make_password, check_password
 from .models import User
@@ -74,11 +74,14 @@ class LoginView(generics.GenericAPIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+    
         if user and check_password(password, user.password):
 
             tokens = create_jwt_pair_for_user(user)
 
-            response = {"message": "Login Successfull", "tokens": tokens}
+            serialized_user = UserSerializer(instance=user)
+
+            response = {"message": "Login Successfull", "tokens": tokens, 'user': serialized_user}
            
             return Response(data=response, status=status.HTTP_200_OK)
 
