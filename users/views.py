@@ -81,7 +81,7 @@ class LoginView(generics.GenericAPIView):
 
             serialized_user = UserSerializer(instance=user)
 
-            response = {"message": "Login Successfull", "tokens": tokens, 'user': serialized_user}
+            response = {"message": "Login Successfull", "tokens": tokens, 'user': serialized_user.data}
            
             return Response(data=response, status=status.HTTP_200_OK)
 
