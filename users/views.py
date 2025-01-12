@@ -70,23 +70,22 @@ class LoginView(generics.GenericAPIView):
         except User.DoesNotExist:
             logger.info("Invalid login attempt for email: {}".format(email))
             return Response(
-                data={"message":"Invalid email or password"},
+                data={"message": "Invalid email or password"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-    
         if user and check_password(password, user.password):
 
             tokens = create_jwt_pair_for_user(user)
 
             serialized_user = UserSerializer(instance=user)
 
-            response = {"message": "Login Successfull", "tokens": tokens, 'user': serialized_user.data}
-           
+            response = {"message": "Login Successfull",
+                        "tokens": tokens, 'user': serialized_user.data}
+
             return Response(data=response, status=status.HTTP_200_OK)
 
         return Response(
-            data={"message":"Invalid email or password"},
+            data={"message": "Invalid email or password"},
             status=status.HTTP_400_BAD_REQUEST
         )
-            

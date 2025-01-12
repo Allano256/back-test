@@ -9,7 +9,8 @@ class NewCity(models.Model):
     Model for new City.
     """
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     city_name = models.CharField(max_length=150)
     date = models.DateField()
     notes = models.TextField(max_length=200)

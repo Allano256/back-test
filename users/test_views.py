@@ -9,9 +9,9 @@ class AuthViewsTestCase(TestCase):
     def setUp(self):
         # Setup reusable variables and client
         self.client = APIClient()
-        self.signup_url = reverse("signup")  # Adjust the name to match your URL configuration
-        self.login_url = reverse("login")  # Adjust the name to match your URL configuration
-        
+        self.signup_url = reverse("signup")
+        self.login_url = reverse("login")
+
         self.user_data = {
             "email": "testuser@example.com",
             "password": "strongpassword",
@@ -23,7 +23,7 @@ class AuthViewsTestCase(TestCase):
             email="existinguser@example.com",
             first_name="Existing",
             last_name="User",
-            password="hashedpassword",  # Note: Use hashed passwords in actual tests
+            password="hashedpassword",
             is_active=True
         )
         self.existing_user.set_password("securepassword")
@@ -35,7 +35,8 @@ class AuthViewsTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertIn("message", response.data)
         self.assertEqual(response.data["message"], "User Created Successfully")
-        self.assertTrue(User.objects.filter(email=self.user_data["email"]).exists())
+        self.assertTrue(User.objects.filter(
+            email=self.user_data["email"]).exists())
 
     def test_signup_invalid_data(self):
         """Test user signup with invalid data."""
@@ -72,5 +73,3 @@ class AuthViewsTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("message", response.data)
         self.assertEqual(response.data["message"], "Invalid email or password")
-
-    
